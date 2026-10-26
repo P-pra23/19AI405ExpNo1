@@ -1,6 +1,6 @@
 <h1>ExpNo 1 :Developing AI Agent with PEAS Description</h1>
-<h3>Name: Saravanan N</h3>
-<h3>Register Number/Staff Id: TSML006</h3>
+<h3>Name: Prathikshaa N</h3>
+<h3>Register Number : 212224100043</h3>
 
 
 <h3>AIM:</h3>
@@ -40,3 +40,76 @@
 <p>Treat unhealthy patients in each room. And check for the unhealthy patients in random room</p>
 <h3>STEP 5:</h3>
 <p>Measure the performance parameters: For each treatment performance incremented, for each movement performance decremented</p>
+
+## Progarm:
+```
+import random
+
+
+class MedicineAgent:
+    def __init__(self):
+        self.location = "Room A"
+        self.performance = 0
+
+    def act(self, environment):
+        temp = environment[self.location]["temperature"]
+
+        if temp > 98.5:
+            print(
+                f"Patient in {self.location} unhealthy "
+                f"({temp:.1f}°F). Giving medicine."
+            )
+            self.performance += 10
+            environment[self.location]["temperature"] = 98.0
+        else:
+            print(
+                f"Patient in {self.location} healthy "
+                f"({temp:.1f}°F)."
+            )
+
+        self.location = (
+            "Room B" if self.location == "Room A" else "Room A"
+        )
+
+        self.performance -= 1
+
+        print(f"Moving to {self.location}. Performance: {self.performance}")
+        print("-" * 30)
+
+
+def main():
+    environment = {
+        "Room A": {"temperature": random.uniform(97.0, 102.0)},
+        "Room B": {"temperature": random.uniform(97.0, 102.0)}
+    }
+
+    agent = MedicineAgent()
+
+    print("Starting simulation.")
+    print("-" * 30)
+
+    for step in range(5):
+        print(f"--- Step {step + 1} ---")
+
+        agent.act(environment)
+
+        random_room = random.choice(["Room A", "Room B"])
+        environment[random_room]["temperature"] = random.uniform(
+            99.0, 103.0
+        )
+
+    print("Simulation finished.")
+
+
+if __name__ == "__main__":
+    main()
+```
+
+## Output: 
+<img width="787" height="527" alt="image" src="https://github.com/user-attachments/assets/0ddcf653-f754-421e-b367-f77e63391942" />
+
+
+## RESULT:
+
+Thus, the PEAS description for the Medicine Prescribing Agent was successfully developed and implemented in Python. The agent identifies patients with a temperature greater than 98.5°F, administers medicine, moves between Room A and Room B, and updates its performance score based on treatment and movement. Hence, the AI agent successfully demonstrates the basic working of a simple reflex agent in a hospital environment.
+
